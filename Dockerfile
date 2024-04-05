@@ -1,11 +1,8 @@
-#FROM ubuntu:latest
-#LABEL authors="user"
-#
-#ENTRYPOINT ["top", "-b"]
+
 FROM maven:3.8.7 as build
 COPY. .
 RUN mvn package
-
+COPY . .
 FROM openjdk:17
 COPY --from=build target/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
